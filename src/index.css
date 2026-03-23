@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap');
+
+:root {
+  --bg-color: #ffffff;
+  --text-primary: #191f28;        /* Toss Black */
+  --text-secondary: #4e5968;      /* Toss Grey */
+  --accent: #3182f6;              /* Toss Blue */
+  --accent-soft: rgba(49, 130, 246, 0.08);
+  --accent-border: rgba(49, 130, 246, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  font-family: 'Outfit', sans-serif;
+  background-color: transparent;
+  color: var(--text-primary);
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+/* 글로벌 배경 모듈을 투과시키기 위한 투명 섹션 강제 부여 */
+section {
+  background: transparent !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
