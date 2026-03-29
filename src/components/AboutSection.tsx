@@ -20,8 +20,7 @@ export function AboutSection() {
         transition={{ duration: 0.7, delay: 0.1 }}
         style={{ fontSize: 'clamp(3.5rem, 6vw, 5.5rem)', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.04em', lineHeight: 1.15, marginBottom: '6rem', wordBreak: 'keep-all' }}
       >
-        효율성, 정확성, 확장성.<br/>
-        완성된 소프트웨어를 고집합니다.
+        About Me
       </motion.h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem' }}>
@@ -32,18 +31,25 @@ export function AboutSection() {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ duration: 0.7, delay: 0.2 }}
+           // 텍스트 가독성을 유지하면서 구역을 더 넓게 쓰기 위해 최대 너비 제한 완화 (660px -> 800px)
+           style={{ maxWidth: '1000px' }} 
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '2rem' }}>
             <div style={{ width: '4px', height: '1.5rem', background: 'var(--accent)', borderRadius: '2px' }} />
             <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>Introduction</h3>
           </div>
           
-          <p style={{ fontSize: '1.15rem', lineHeight: 1.85, color: 'var(--text-secondary)', marginBottom: '1.5rem', wordBreak: 'keep-all' }}>
-            팀원과의 협업을 중시하며, 코드 리뷰와 피드백을 적극적으로 수용하여 문제를 명확하게 해결하는 태도를 가졌습니다. 원활한 커뮤니케이션을 바탕으로 비즈니스 목표를 빠르고 정확하게 달성하는 것을 최우선으로 생각합니다.
-          </p>
-          <p style={{ fontSize: '1.15rem', lineHeight: 1.85, color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>
-            단순히 화면을 그려내는 것을 넘어, 사용자의 압도적인 편의성과 대용량 데이터 처리에도 흔들리지 않는 애플리케이션의 성능 최적화를 위한 최적의 컴포넌트 구조를 설계합니다. 끊임없이 고민하고 발전하는 엔지니어가 되겠습니다.
-          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.6rem' }}>
+            <p style={{ fontSize: '1.15rem', lineHeight: 1.9, color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>
+              세상의 모든 사물을 Object로 모델링하여 코드로 표현할 수 있다는 말에 이끌려 개발을 시작했습니다. 그 말이 마음에 닿았던 이유는 단순한 기술적 흥미 때문이 아니라, 현실의 복잡한 문제를 구조적으로 풀어낼 수 있다는 가능성 때문이었습니다. 지금도 개발을 시작할 때 가장 먼저 고민하는 것은 아키텍처입니다. 머리는 판단하고 손은 실행하듯, 각 구성 요소가 자신의 책임에 집중하는 유기적이고 명확한 구조를 지향합니다.
+            </p>
+            <p style={{ fontSize: '1.15rem', lineHeight: 1.9, color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>
+              일하는 방식에 있어서는 효율을 가장 중요하게 생각합니다. 깊은 사고가 필요한 문제 앞에서 집중력이 흐트러졌다고 느끼면 눈치 보지 않고 정시에 퇴근하고, 반대로 좋은 아이디어가 떠오르는 새벽에는 조용한 사무실을 찾아 혼자 문제를 들여다보며 생각을 정리하기도 했습니다. 주어진 시간을 채우는 것보다, 내가 가장 선명하게 사고할 수 있는 상태에서 일하는 것이 더 나은 결과를 만든다고 믿기 때문입니다.
+            </p>
+            <p style={{ fontSize: '1.15rem', lineHeight: 1.9, color: 'var(--text-secondary)', wordBreak: 'keep-all' }}>
+              가장 보람을 느꼈던 순간은 내가 만든 것이 현장에서 실제로 잘 쓰이고 있을 때입니다. 한국콜마 프로젝트에서 자재 가용성 점검 기능을 개발했을 때, 현업 담당자들의 업무 시간이 절반으로 줄었다는 피드백을 받았습니다. 엔진 수행 시간을 60% 단축했을 때 현업 분들이 보여준 반응은, 어떤 수치나 성과보다도 선명하게 기억에 남아 있습니다.
+            </p>
+          </div>
         </motion.div>
 
         {/* Education & Activities */}
@@ -74,11 +80,19 @@ export function AboutSection() {
            </div>
            
            {/* Activity Item 2 */}
+           <div style={{ position: 'relative', paddingLeft: '1.5rem', borderLeft: '2px solid #f1f5f9', marginBottom: '2.5rem' }}>
+             <div style={{ position: 'absolute', left: '-5px', top: '6px', width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)' }} />
+             <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>2023-2024</p>
+             <p style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>교내 코딩테스트 동아리 창설 및 운영</p>
+             <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>학우들을 위한 정기적인 알고리즘 스터디 및 문제 풀이 리뷰 세션을 주도하며 동반 성장의 문화를 만들었습니다.</p>
+           </div>
+           
+           {/* Activity Item 3 */}
            <div style={{ position: 'relative', paddingLeft: '1.5rem', borderLeft: '2px solid #f1f5f9' }}>
              <div style={{ position: 'absolute', left: '-5px', top: '6px', width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)' }} />
-             <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>Ongoing</p>
+             <p style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>2022-2024</p>
              <p style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>Baekjoon Online Judge</p>
-             <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>알고리즘 문제 풀이 (solved.ac: eowns1111)</p>
+             <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>알고리즘 문제 꾸준한 풀이 (solved.ac: eowns1111)</p>
            </div>
         </motion.div>
 

@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
 const lines = [
-  '나는',
-  '그냥 짜지 않는다.',
-  '생각하고, 설계하고,',
-  '그리고 나서 만든다.',
+  'BUILD',
+  'BREAK',
+  'LEARN',
+  'REPEAT',
 ];
 
 // ── 도미노 좌우(Y축) 첫 번째 상태(철학) Variants ──────────────────────────
@@ -221,29 +221,64 @@ export function ThinkSection() {
             >
               <motion.p
                 style={{
-                  fontSize: 'clamp(4.5rem, 10vw, 9.5rem)',
+                  fontSize: 'clamp(1.5rem, 3.5vw, 3rem)',
                   ...baseType,
-                  letterSpacing: '-0.045em',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 700,
+                  marginBottom: 'clamp(0.5rem, 2vh, 1.5rem)',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 {(() => {
                   const startIdx = accumulatedGreeting;
-                  accumulatedGreeting += '안녕하세요,'.length;
-                  return renderLetters('안녕하세요,', startIdx, greetingLetter);
+                  accumulatedGreeting += '안녕하세요, '.length;
+                  return renderLetters('안녕하세요, ', startIdx, greetingLetter);
                 })()}
               </motion.p>
 
               <motion.p
                 style={{
-                  fontSize: 'clamp(2.5rem, 6.5vw, 6rem)',
+                  fontSize: 'clamp(3rem, 7.5vw, 8rem)',
                   ...baseType,
                   letterSpacing: '-0.04em',
+                  lineHeight: 1.15,
                 }}
               >
                 {(() => {
                   const startIdx = accumulatedGreeting;
-                  accumulatedGreeting += '프론트엔드 엔지니어 이대준입니다.'.length;
-                  return renderLetters('프론트엔드 엔지니어 이대준입니다.', startIdx, greetingLetter);
+                  accumulatedGreeting += '아이디어를 코드로, '.length;
+                  return renderLetters('아이디어를 코드로, ', startIdx, greetingLetter);
+                })()}
+              </motion.p>
+
+              <motion.p
+                style={{
+                  fontSize: 'clamp(3rem, 7.5vw, 8rem)',
+                  ...baseType,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 1.15,
+                }}
+              >
+                {(() => {
+                  const startIdx = accumulatedGreeting;
+                  accumulatedGreeting += '코드를 경험으로 바꾸는'.length;
+                  return renderLetters('코드를 경험으로 바꾸는', startIdx, greetingLetter);
+                })()}
+              </motion.p>
+
+              <motion.p
+                style={{
+                  fontSize: 'clamp(2rem, 5vw, 5rem)',
+                  ...baseType,
+                  color: 'var(--accent)',
+                  letterSpacing: '-0.03em',
+                  marginTop: 'clamp(1rem, 3vh, 2rem)',
+                }}
+              >
+                {(() => {
+                  const startIdx = accumulatedGreeting;
+                  accumulatedGreeting += '풀스택 개발자 이대준입니다.'.length;
+                  return renderLetters('풀스택 개발자 이대준입니다.', startIdx, greetingLetter);
                 })()}
               </motion.p>
 
@@ -263,7 +298,6 @@ export function ThinkSection() {
                 {[
                   { name: 'TypeScript', color: '#3178C6' },
                   { name: 'React', color: '#61DAFB' },
-                  { name: 'Next.js', color: '#000000' },
                   { name: 'Zustand', color: '#4A3629' },
                   { name: 'Tailwind CSS', color: '#06B6D4' },
                   { name: 'Node.js', color: '#339933' },

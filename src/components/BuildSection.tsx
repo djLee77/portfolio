@@ -1,72 +1,64 @@
 import { useState, useRef } from 'react';
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ApsDetailView } from './ApsDetailView';
-import { MediaDetailView } from './MediaDetailView';
-import { X } from 'lucide-react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { LinkedListGraph } from './LinkedListGraph';
+import { EngineGraph } from './EngineGraph';
+import { WorkflowGraph } from './WorkflowGraph';
 
 const projects = [
   {
     num: '01',
-    tag: 'React · TypeScript · Cytoscape.js · C#',
+    tag: 'C# · TypeScript · React.js · Cytoscape.js',
     company: 'VMS Solutions',
-    period: '2024.10 — 현재',
-    title: '한화에어로\nAPS 시스템',
-    desc: '항공기 엔진 조립 공정의 생산계획 수립 자동화 시스템. 작업자 숙련도·피로도·근무스케줄 등 5가지 이질적 제약 조건을 단일 스케줄링 엔진에 통합 설계. Cytoscape.js 기반 BOP 공정 흐름 인터랙티브 시각화.',
-    accent: '#3182f6', // Toss Blue
-    visual: (
-      <div style={{ width: '100%', height: '100%', position: 'relative', background: '#f2f4f6' }}>
-        <img 
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, position: 'absolute', inset: 0 }} 
-          alt="한화에어로스페이스 APS" 
-          loading="eager"
-        />
-      </div>
-    ),
+    period: '2026.01 — 현재',
+    title: '신화인터텍 시스템\n 마이그레이션',
+    overview: '필름 생산/운송 계획 수립 자동화 시스템 마이그레이션. Agile/Sprint 기반으로 프로젝트를 진행하며, ERP 연동 워크플로우 설계부터 레거시 화면 전환, 시뮬레이션 엔진 재설계까지 전반을 담당.',
+    accent: '#3182f6',
+    role: '시뮬레이션 엔진 개발 · 웹 풀스택 개발 · 워크플로우 설계',
+    tech: ['C#', 'TypeScript', 'React.js', 'Cytoscape.js', 'MariaDB', 'Gitea', 'Nexus', 'CI/CD'],
+    achievements: [
+      'ERP 인터페이스 연동 워크플로우 설계 및 구축',
+      'JSP 기반 레거시 화면을 React.js + Java REST API + ORM 구조로 마이그레이션',
+      '시뮬레이션 엔진 마이그레이션 및 튜닝, 비즈니스 로직 재설계'
+    ],
   },
   {
     num: '02',
-    tag: 'C# · MS SQL · 도메인 모델링',
+    tag: 'C# · TypeScript · React.js · CI/CD',
     company: 'VMS Solutions',
-    period: '2024.03 — 2024.08',
-    title: '한국콜마\nAPS 고도화',
-    desc: '화장품 제조사 APS 엔진 고도화. 사용자 확정 계획 반영 로직으로 엔진 실행 시간 50% 단축. 자재가용성 점검 기능으로 제조 계획 준수율 99% 이상 달성.',
-    accent: '#3182f6', // Toss Blue
-    visual: (
-      <div style={{ width: '100%', height: '100%', position: 'relative', background: '#f2f4f6' }}>
-        <img 
-          src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=1200&auto=format&fit=crop" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, position: 'absolute', inset: 0 }} 
-          alt="한국콜마 APS" 
-          loading="eager"
-        />
-      </div>
-    ),
+    period: '2025.06 — 2025.12',
+    title: '한화에어로스페이스\n엔진조립 SF계획시스템',
+    overview: '항공기 엔진 조립 공정의 생산계획 자동화 시스템 신규 구축. 폐쇄망 환경에서 프론트엔드 개발, 시뮬레이션 엔진 설계·구현·검증, CI/CD 인프라 구축을 전담.',
+    accent: '#3182f6',
+    role: '시뮬레이션 엔진 개발 · 웹 개발 · 환경 구축',
+    tech: ['C#', 'TypeScript', 'React.js', 'Cytoscape.js', 'MariaDB', 'Gitea', 'Nexus', 'CI/CD'],
+    achievements: [
+      '작업자 숙련도·피로도·근무 스케줄(휴무/식사/휴식)·Main/Sub 유형을 반영한 배치 최적화 알고리즘 설계 및 구현',
+      '여러가지 규칙(설비 제약 · 자재 제약 · 작업자 제약 · 작업 우선순위)을 반영한 스케줄링 엔진',
+      'Cytoscape.js를 활용한 BOP 공정 흐름 인터랙티브 시각화 — 그래프 기반 공정 시각화 화면',
+      '폐쇄망 환경에서의 Gitea · Nexus 기반 형상관리 및 외부망 없이 배포·공유 환경 자체 구성'
+    ],
   },
   {
     num: '03',
-    tag: 'React · Node.js · PostgreSQL · AI',
-    company: '개인 프로젝트',
-    period: '2023.09 — 2024.02',
-    title: 'D&D\nCloset',
-    desc: 'AI 배경 제거로 옷 이미지를 수집하고, 인터랙티브 캔버스에서 코디를 배치·저장·공유하는 풀스택 웹 플랫폼. Konva 기반 드래그 앤 드롭, JWT 인증, Render.com + Supabase 배포.',
-    accent: '#3182f6', // Toss Blue
-    visual: (
-      <div style={{ width: '100%', height: '100%', position: 'relative', background: '#f2f4f6' }}>
-        <img 
-          src="https://images.unsplash.com/photo-1558171813-4c088753af8f?q=80&w=1200&auto=format&fit=crop" 
-          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85, position: 'absolute', inset: 0 }} 
-          alt="D&D Closet" 
-          loading="eager"
-        />
-      </div>
-    ),
+    tag: 'C# · 도메인 모델링 · 최적화',
+    company: 'VMS Solutions',
+    period: '2024.10 — 2025.05',
+    title: '한국콜마\nAPS 엔진 고도화',
+    overview: '화장품 제조사 한국콜마의 APS 엔진 고도화 프로젝트. Agile/Sprint 기반으로 시뮬레이션 엔진 설계·구현·검증을 담당하며, 현업 인터뷰를 통해 요구사항 정의 및 검증 프로세스를 직접 수행.',
+    accent: '#3182f6',
+    role: '시뮬레이션 엔진 반자동화 기능 · 자재가용성 점검 기능 개발',
+    tech: ['C#', '도메인 모델링', '최적화'],
+    achievements: [
+      '사용자 확정 계획 반영 로직 구현으로 스케줄링 반자동화',
+      '자재가용성 점검 기능 개발로 제조 계획 준수율 99% 이상 달성',
+      '자료구조를 활용한 엔진 실행시간 최적화 → 엔진 실행 시간 60% 단축',
+      '현업 인터뷰를 통한 요구사항 정의 및 검증 프로세스 직접 수행'
+    ],
   },
 ];
 
 export function BuildSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -80,7 +72,6 @@ export function BuildSection() {
     else setActiveIndex(2);
   });
 
-  // 애니메이션 속도 세팅: Expo Out 커브를 통해 끊김 없이 재빠르게 쾌속 슬라이드 되는 극단적 가속 부여 (사용자 만족 스피드)
   const slideTransition = { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const };
 
   return (
@@ -96,7 +87,7 @@ export function BuildSection() {
 
       <div ref={wrapperRef} style={{ display: 'flex', height: '300vh', position: 'relative' }}>
         
-        {/* 좌측: 스크롤 텍스트 구역 (빈공간을 줄이고 카드로 밀착) */}
+        {/* 좌측: 스크롤 텍스트 구역 */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           {projects.map((project, i) => (
             <motion.div
@@ -117,100 +108,23 @@ export function BuildSection() {
                 {project.title}
               </h3>
               <p style={{ fontSize: '1.15rem', lineHeight: 1.8, color: 'var(--text-secondary, #64748b)', maxWidth: '650px' }}>
-                {project.desc}
+                {project.overview}
               </p>
-              <motion.button 
-                onClick={() => setSelectedProject(project)}
-                whileHover={{ scale: 1.02, backgroundColor: '#1b64da' }} 
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.15 }} 
-                style={{ 
-                  alignSelf: 'flex-start', marginTop: '2.5rem', padding: '0.9rem 2.2rem', 
-                  borderRadius: '12px', border: 'none', 
-                  background: project.accent, color: '#ffffff', 
-                  fontSize: '1.05rem', fontWeight: 600, cursor: 'pointer', 
-                  fontFamily: 'inherit', letterSpacing: '-0.01em',
-                  boxShadow: '0 4px 14px rgba(49, 130, 246, 0.3)'
-                }}
-              >
-                프로젝트 보기
-              </motion.button>
             </motion.div>
           ))}
         </div>
 
-        {/* 우측: 3차원 Slicing Tear 모션 구역 (텍스트 영역 넓힘에 따라 비율 조정) */}
-        <div style={{ flex: 1, position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '4vh 8vw 4vh 2vw', perspective: '1200px' }}>
+        {/* 우측: 3차원 디테일 텍스트 모션 구역 */}
+        <div style={{ flex: 1, position: 'sticky', top: 0, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '4vh 8vw 4vh 2vw' }}>
           
-          {/* 1. Behind Card (Detail Modal) - Slides out to the left when selected */}
-          <AnimatePresence>
-            {selectedProject && (
-              <motion.div
-                initial={{ x: '0%', opacity: 1, scale: 0.9 }}
-                animate={{ x: '-95%', opacity: 1, scale: 1 }}
-                exit={{ x: '0%', opacity: 1, scale: 0.9 }}
-                transition={{ type: 'spring', damping: 22, stiffness: 110, delay: 0.05 }}
-                style={{
-                  position: 'absolute',
-                  width: '80%',
-                  height: '60vh',
-                  background: '#ffffff',
-                  borderRadius: '24px',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.02)',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  zIndex: 5, // Behind the main card (which will jump to zIndex 10)
-                }}
-              >
-                {/* Header built into the sliding card */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2rem', borderBottom: '1px solid #f1f5f9', background: '#ffffff', zIndex: 10 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: selectedProject.accent, background: `${selectedProject.accent}15`, padding: '0.3rem 0.6rem', borderRadius: '12px' }}>
-                      {selectedProject.num}
-                    </span>
-                    <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#1e293b' }}>
-                      {selectedProject.title.replace('\n', ' ')}
-                    </h4>
-                  </div>
-                  <button 
-                    onClick={() => setSelectedProject(null)}
-                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem', borderRadius: '50%', transition: 'all 0.2s' }}
-                    onMouseOver={(e) => e.currentTarget.style.background = '#f1f5f9'}
-                    onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-
-                {/* Body built into the sliding card */}
-                <div style={{ flex: 1, overflowY: 'auto', background: '#f8fafc' }}>
-                  {selectedProject.num === '01' || selectedProject.num === '02' ? (
-                    <ApsDetailView />
-                  ) : selectedProject.num === '03' ? (
-                    <MediaDetailView />
-                  ) : null}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* 2. Main Visual Card Container - Pops out in 3D when detail card slides out */}
           <motion.div 
-            animate={{ 
-              scale: selectedProject ? 1.05 : 1, 
-              x: selectedProject ? '12%' : '0%', 
-              rotateY: selectedProject ? -8 : 0,
-            }}
-            transition={{ type: 'spring', damping: 20, stiffness: 100 }}
             style={{ 
-              width: '80%', height: '60vh', borderRadius: '24px', background: '#ffffff', 
-              boxShadow: selectedProject ? '30px 40px 80px rgba(0,0,0,0.08)' : '0 20px 60px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.03)', 
+              width: '100%', maxWidth: '90%', height: '70vh', borderRadius: '24px', background: '#ffffff', 
+              boxShadow: '0 20px 60px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.03)', 
               overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column',
-              zIndex: 10, transformStyle: 'preserve-3d'
+              zIndex: 10
             }}
           >
-            
             {/* 상단 컬러 바 */}
             <motion.div
               animate={{ background: `linear-gradient(90deg, ${projects[activeIndex].accent}, ${projects[activeIndex].accent}55)` }}
@@ -218,16 +132,11 @@ export function BuildSection() {
               style={{ height: '4px', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 50 }}
             />
 
-            {/* 고속 가로 슬라이딩 (Horizontal Swipe) 콘텐츠 스왑 영역 */}
             <div style={{ position: 'absolute', inset: 0, top: '4px', overflow: 'hidden' }}>
               {projects.map((project, i) => {
                 const isActive = activeIndex === i;
                 const isPast = activeIndex > i;
-                
-                // 활성 카드는 정중앙(0%), 과거 카드는 왼쪽(-100%), 미래 카드는 오른쪽(100%)으로 매끄럽게 교차
                 const xPos = isActive ? '0%' : (isPast ? '-100%' : '100%');
-                
-                // 교차할 때 현재 카드가 깔끔하게 위로 올라오도록 zIndex 구성
                 const zIndex = isActive ? 10 : 1;
 
                 return (
@@ -237,38 +146,83 @@ export function BuildSection() {
                     transition={slideTransition}
                     style={{ 
                       position: 'absolute', inset: 0, zIndex, 
-                      borderRadius: '0 0 24px 24px', 
-                      overflow: 'hidden',
-                      boxShadow: isActive ? '0 0 50px rgba(0,0,0,0.5)' : 'none' // 들어올 때 강렬한 입체 그림자
+                      borderRadius: '0 0 24px 24px', overflow: 'hidden',
+                      boxShadow: isActive ? '0 0 50px rgba(0,0,0,0.05)' : 'none',
+                      background: '#ffffff',
+                      display: 'flex',
+                      flexDirection: 'column'
                     }}
                   >
-                    <div style={{ position: 'absolute', inset: 0 }}>{project.visual}</div>
-                    
-                    {/* 그라데이션 오버레이 */}
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent 40%)', pointerEvents: 'none' }} />
-                    
-                    {/* 번호 워터마크 */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '1.2rem',
-                        right: '1.6rem',
-                        fontSize: '6.5rem',
-                        fontWeight: 800,
-                        color: 'rgba(255,255,255,0.7)',
-                        lineHeight: 1,
-                        fontFamily: 'Space Grotesk, sans-serif',
-                        letterSpacing: '-0.04em',
-                        pointerEvents: 'none',
-                      }}
-                    >
-                      {project.num}
+                    {/* 카드 타이틀 헤더 */}
+                    <div style={{ padding: '1.5rem 2.5rem', borderBottom: '1px solid #f1f5f9', background: '#ffffff', display: 'flex', alignItems: 'center', gap: '1rem', zIndex: 5 }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 800, color: project.accent, background: `${project.accent}15`, padding: '0.4rem 0.8rem', borderRadius: '12px' }}>
+                        {project.num}
+                      </span>
+                      <h4 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#1e293b', letterSpacing: '-0.02em' }}>
+                        {project.title.replace('\n', ' ')}
+                      </h4>
+                    </div>
+
+                    {/* 카드 내용 바디 */}
+                    <div style={{ flex: 1, overflowY: 'auto', background: '#f8fafc', padding: '2rem 3rem' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                        
+                        <div>
+                          <h5 style={{ fontSize: '0.82rem', color: project.accent, fontWeight: 800, letterSpacing: '0.08em', marginBottom: '0.6rem', textTransform: 'uppercase' }}>담당 역할</h5>
+                          <p style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 600 }}>{project.role}</p>
+                        </div>
+
+                        <div>
+                          <h5 style={{ fontSize: '0.82rem', color: project.accent, fontWeight: 800, letterSpacing: '0.08em', marginBottom: '0.8rem', textTransform: 'uppercase' }}>사용 기술</h5>
+                          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                            {project.tech.map(t => (
+                              <span key={t} style={{ padding: '0.4rem 1.1rem', background: '#e2e8f0', borderRadius: '30px', fontSize: '0.9rem', color: '#475569', fontWeight: 600 }}>
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h5 style={{ fontSize: '0.82rem', color: project.accent, fontWeight: 800, letterSpacing: '0.08em', marginBottom: '0.8rem', textTransform: 'uppercase' }}>프로젝트 개요</h5>
+                          <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, wordBreak: 'keep-all' }}>{project.overview}</p>
+                        </div>
+
+                        <div>
+                          <h5 style={{ fontSize: '0.82rem', color: project.accent, fontWeight: 800, letterSpacing: '0.08em', marginBottom: '0.8rem', textTransform: 'uppercase' }}>주요 성과 및 업무</h5>
+                          <ul style={{ paddingLeft: '1.2rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                            {project.achievements.map((item, idx) => (
+                              <li key={idx} style={{ fontSize: '1.05rem', color: '#475569', lineHeight: 1.7, wordBreak: 'keep-all' }}>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {project.num === '03' && (
+                          <div style={{ marginTop: '0.5rem', animation: 'fadeIn 0.5s ease-in' }}>
+                            <LinkedListGraph />
+                          </div>
+                        )}
+
+                        {project.num === '02' && (
+                          <div style={{ marginTop: '0.5rem', animation: 'fadeIn 0.5s ease-in' }}>
+                            <EngineGraph />
+                          </div>
+                        )}
+
+                        {project.num === '01' && (
+                          <div style={{ marginTop: '0.5rem', animation: 'fadeIn 0.5s ease-in' }}>
+                            <WorkflowGraph />
+                          </div>
+                        )}
+
+                      </div>
                     </div>
                   </motion.div>
                 );
               })}
             </div>
-
           </motion.div>
         </div>
       </div>

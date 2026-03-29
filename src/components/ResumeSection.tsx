@@ -19,7 +19,7 @@ const entries = [
     role: '선임 · 프론트엔드 & 풀스택',
     company: 'VMS Solutions',
     location: '경기 · 용인',
-    skills: ['TypeScript', 'React', 'Next.js', 'Java', 'C#', 'MS SQL', 'Gitea', 'Nexus'],
+    skills: ['TypeScript', 'React', 'Java', 'C#', 'MS SQL', 'Gitea', 'Nexus'],
     highlights: [
       'React + TypeScript 기반 대형 제조사 생산계획(APS) SPA 전체 설계 및 개발',
       'Cytoscape.js 기반 BOP 공정 흐름 인터랙티브 시각화 — 복잡한 공정 데이터를 UI로 직관화',

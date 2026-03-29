@@ -1,236 +1,192 @@
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Github, BookOpen, ArrowRight, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, BookOpen, Mail } from 'lucide-react';
 
-const MARQUEE_TEXT = "LET'S BUILD TOGETHER \u2022 LET'S BUILD TOGETHER \u2022 LET'S BUILD TOGETHER \u2022 ";
-
-// 수정: document.body.style 침범 완전 제거
-// → useScroll + useTransform으로 컨테이너 backgroundColor를 직접 애니메이팅
 export function ConnectSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [email, setEmail] = useState('');
-
-  // 섹션 하단에서 뷰포트 중앙까지 진입하는 구간 동안 배경 전환
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'start 30%'],
+  const [formData, setFormData] = useState({
+    name: '', subject: '', email: '', message: ''
   });
 
-  const bg        = useTransform(scrollYProgress, [0, 1], ['#ffffff', '#111111']);
-  const textColor = useTransform(scrollYProgress, [0, 1], ['#1e293b', '#ffffff']);
-  const subColor  = useTransform(scrollYProgress, [0, 1], ['rgba(30,41,59,0.45)', 'rgba(255,255,255,0.45)']);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const textColor = '#1e293b';
+  const subColor  = 'rgba(30,41,59,0.55)';
+  const borderColor = 'rgba(0,0,0,0.15)';
+
+  const inputStyle = {
+    width: '100%',
+    padding: '1rem 1.4rem',
+    background: 'rgba(255,255,255,0.7)',
+    border: `1px solid ${borderColor}`,
+    borderRadius: '10px',
+    color: textColor,
+    fontSize: '1.05rem',
+    outline: 'none',
+    fontFamily: 'Outfit, sans-serif',
+    transition: 'all 0.2s ease',
+  };
+
+  const labelStyle = {
+    fontSize: '0.85rem',
+    fontWeight: 700,
+    color: textColor,
+    marginBottom: '0.6rem',
+    display: 'block',
+    letterSpacing: '0.02em',
+  };
 
   return (
     <motion.section
       ref={sectionRef}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: false, amount: 0.1 }} 
       style={{
-        background: bg,
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        overflow: 'hidden',
+        padding: '8rem 0 6rem',
         position: 'relative',
+        zIndex: 50,
+        // 솔리드 배경 완전 제거: 뒤의 파라락스 유리 카드가 날아와 진짜 배경이 됨!
+        background: 'transparent',
       }}
     >
-      {/* 상단 카피 */}
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75 }}
-        viewport={{ once: true }}
-        style={{ padding: '6rem 6vw 0' }}
-      >
+      <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', padding: '0 6vw', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        
+        {/* Texts */}
         <motion.p
-          style={{
-            fontSize: '0.95rem',
-            letterSpacing: '0.3em',
-            color: subColor,
-            textTransform: 'uppercase',
-            fontWeight: 800,
-            marginBottom: '2.5rem',
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: false }}
+          style={{ fontSize: '0.95rem', letterSpacing: '0.3em', color: subColor, textTransform: 'uppercase', fontWeight: 800, marginBottom: '1.5rem' }}
         >
           03 — Connect
         </motion.p>
 
         <motion.h2
-          style={{
-            fontSize: 'clamp(4.5rem, 9vw, 8.5rem)',
-            fontWeight: 800,
-            letterSpacing: '-0.045em',
-            lineHeight: 1.05,
-            fontFamily: 'Space Grotesk, sans-serif',
-            marginBottom: '1.5rem',
-            color: textColor,
-          }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: false }}
+          style={{ fontSize: 'clamp(4.5rem, 9vw, 7.5rem)', fontWeight: 800, letterSpacing: '-0.045em', lineHeight: 1.05, fontFamily: 'Space Grotesk, sans-serif', marginBottom: '1.5rem', color: textColor }}
         >
-          함께 빌드할<br />준비가 됐나요?
+          CONTACT
         </motion.h2>
 
         <motion.p
-          style={{
-            fontSize: '1.2rem',
-            color: subColor,
-            maxWidth: '560px',
-            lineHeight: 1.8,
-            marginBottom: '4rem',
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: false }}
+          style={{ fontSize: '1.15rem', color: subColor, maxWidth: '480px', lineHeight: 1.8, marginBottom: '3rem' }}
         >
-          새로운 기회, 협업 제안, 흥미로운 아이디어를 환영합니다.
-          지금 바로 연락주세요.
+          협업 제안과 커피챗을 언제나 환영합니다.<br/>
+          최고의 프로덕트를 함께 만들 준비가 되어 있습니다.
         </motion.p>
 
-        {/* 소셜 링크 */}
-        <div
-          style={{ display: 'flex', gap: '0.75rem', marginBottom: '5rem', flexWrap: 'wrap' }}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          viewport={{ once: false }}
+          style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '5rem' }}
         >
           {[
             { icon: Github,   label: 'GitHub',  href: 'https://github.com/djLee77' },
-            { icon: BookOpen,  label: 'Blog',    href: 'https://dnd0707.tistory.com' },
-            { icon: Mail,      label: 'Email',   href: 'mailto:dkdnl232@gmail.com' },
-          ].map(({ icon: Icon, label, href }, i) => (
+            { icon: BookOpen, label: 'Blog',    href: 'https://dnd0707.tistory.com' },
+            { icon: Mail,     label: 'Email',   href: 'mailto:dkdnl232@gmail.com' },
+          ].map(({ icon: Icon, label, href }) => (
             <motion.a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.06, background: 'rgba(255,255,255,0.12)' }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.6rem',
-                padding: '0.85rem 1.8rem',
-                borderRadius: '50px',
-                border: '1px solid rgba(255,255,255,0.16)',
-                color: '#ffffff',
-                textDecoration: 'none',
-                fontSize: '1.05rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
+              whileHover={{ scale: 1.06, background: 'rgba(0,0,0,0.06)' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.8rem 1.6rem', borderRadius: '50px', border: `1px solid ${borderColor}`, color: textColor, textDecoration: 'none', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}
             >
               <Icon size={18} strokeWidth={2.0} />
               {label}
             </motion.a>
           ))}
-        </div>
-      </motion.div>
-
-      {/* ── 무한 마키 ── */}
-      <div
-        style={{
-          overflow: 'hidden',
-          borderTop: '1px solid rgba(255,255,255,0.07)',
-          borderBottom: '1px solid rgba(255,255,255,0.07)',
-          padding: '1.6rem 0',
-          marginBottom: '4rem',
-        }}
-      >
-        <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-          style={{ display: 'flex', whiteSpace: 'nowrap' }}
-        >
-          {[0, 1].map((n) => (
-            <span
-              key={n}
-              style={{
-                fontSize: 'clamp(1.4rem, 3vw, 2.2rem)',
-                fontWeight: 800,
-                fontFamily: 'Space Grotesk, sans-serif',
-                letterSpacing: '0.04em',
-                color: 'rgba(255,255,255,0.15)',
-                display: 'inline-block',
-              }}
-            >
-              {MARQUEE_TEXT}
-            </span>
-          ))}
         </motion.div>
-      </div>
 
-      {/* ── 이메일 폼 ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, delay: 0.15 }}
-        viewport={{ once: true }}
-        style={{
-          padding: '0 8vw 6rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          maxWidth: '520px',
-        }}
-      >
-        <label
+        {/* Contact Form - Solid White Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: 'spring', damping: 22, stiffness: 90, delay: 0.5 }}
+          viewport={{ once: false, amount: 0.2 }}
           style={{
-            fontSize: '0.78rem',
-            color: 'rgba(255,255,255,0.38)',
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
+            width: '100%',
+            maxWidth: '640px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5rem',
+            background: '#ffffff', // 유리 카드가 뒤로 숨어들기 때문에 폼 뒷배경을 흰색으로 살려 깔끔하게 처리
+            padding: '3.5rem',
+            borderRadius: '24px',
+            border: '1px solid rgba(0,0,0,0.04)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.02)',
+            textAlign: 'left' // Reset align for form labels
           }}
         >
-          이메일을 남겨두세요
-        </label>
+          <div>
+            <label style={labelStyle}>Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Your name" style={inputStyle} />
+          </div>
+          <div>
+            <label style={labelStyle}>Subject</label>
+            <input type="text" name="subject" value={formData.subject} onChange={handleChange} placeholder="Subject" style={inputStyle} />
+          </div>
+          <div>
+            <label style={labelStyle}>Email</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Your email" style={inputStyle} />
+          </div>
+          <div>
+            <label style={labelStyle}>Message</label>
+            <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your message" rows={6} style={{...inputStyle, resize: 'vertical'}} />
+          </div>
 
-        <div style={{ display: 'flex', gap: '0.6rem' }}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            style={{
-              flex: 1,
-              padding: '0.9rem 1.4rem',
-              borderRadius: '50px',
-              border: '1px solid rgba(255,255,255,0.12)',
-              background: 'rgba(255,255,255,0.06)',
-              color: '#ffffff',
-              fontSize: '0.95rem',
-              outline: 'none',
-              fontFamily: 'Outfit, sans-serif',
-              minWidth: 0,
-            }}
-          />
           <motion.button
-            whileHover={{ scale: 1.05, background: '#e2e8f0' }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.15 }}
+            whileHover={{ background: 'var(--text-primary)', color: '#fff', scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
             style={{
-              padding: '0.9rem 1.4rem',
-              borderRadius: '50px',
-              border: 'none',
-              background: '#ffffff',
-              color: '#111',
-              fontWeight: 700,
-              fontSize: '0.9rem',
+              width: '100%',
+              padding: '1.2rem',
+              background: 'transparent',
+              border: `2px solid var(--text-primary)`,
+              borderRadius: '10px',
+              color: 'var(--text-primary)',
+              fontSize: '1.05rem',
+              fontWeight: 800,
               cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontFamily: 'Outfit, sans-serif',
-              flexShrink: 0,
+              marginTop: '1.5rem',
+              transition: 'background-color 0.2s',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase'
             }}
           >
-            Send
-            <ArrowRight size={15} />
+            SEND
           </motion.button>
-        </div>
-      </motion.div>
+        </motion.div>
+        
+      </div>
 
       <p
         style={{
           position: 'absolute',
           bottom: '2rem',
-          right: '8vw',
-          fontSize: '0.72rem',
-          color: 'rgba(248,247,244,0.18)',
+          right: '6vw',
+          fontSize: '0.75rem',
+          color: 'rgba(30,41,59,0.4)',
           letterSpacing: '0.1em',
         }}
       >
