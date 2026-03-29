@@ -132,8 +132,7 @@ export function LinkedListGraph() {
             'text-background-padding': '2px',
             'text-border-width': 1,
             'text-border-color': '#e2e8f0',
-            'text-border-style': 'solid',
-            'text-border-radius': 4
+            'text-border-style': 'solid'
           }
         },
         {
@@ -153,8 +152,7 @@ export function LinkedListGraph() {
             'text-background-padding': '2px',
             'text-border-width': 1,
             'text-border-color': '#ef4444',
-            'text-border-style': 'solid',
-            'text-border-radius': 4
+            'text-border-style': 'solid'
           }
         }
       ],
