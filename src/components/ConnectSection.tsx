@@ -1,16 +1,70 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Github, BookOpen, Mail, Send } from 'lucide-react';
+import { Github, BookOpen, Mail, Send, CheckCircle, XCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export function ConnectSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     name: '', subject: '', email: '', message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('이름, 이메일, 내용을 모두 입력해주세요.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    // EmailJS 환경변수 매핑
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.warn('[안내] .env 파일에 VITE_EMAILJS 환경변수 3개가 설정되지 않아 임시로 전송을 시뮬레이션합니다.');
+      // 임시 시뮬레이션 모드 (EmailJS 설정 전에도 버튼 체험 가능하게)
+      setTimeout(() => {
+        setSubmitStatus('success');
+        setFormData({ name: '', subject: '', email: '', message: '' });
+        setIsSubmitting(false);
+        setTimeout(() => setSubmitStatus('idle'), 3000);
+      }, 1500);
+      return;
+    }
+
+    const templateParams = {
+      from_name: formData.name,
+      reply_to: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      to_name: '이대준', 
+    };
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then(() => {
+        setSubmitStatus('success');
+        setFormData({ name: '', subject: '', email: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 3000);
+      })
+      .catch((err: any) => {
+        console.error('Email 전송 실패:', err);
+        setSubmitStatus('error');
+        setTimeout(() => setSubmitStatus('idle'), 3000);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   const textColor = '#1e293b';
@@ -138,7 +192,8 @@ export function ConnectSection() {
         </motion.div>
 
         {/* Contact Form - Refined Design */}
-        <motion.div
+        <motion.form
+          onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 40, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ type: 'spring', damping: 22, stiffness: 90, delay: 0.6 }}
@@ -178,30 +233,45 @@ export function ConnectSection() {
           </div>
 
           <motion.button
-            whileHover={{ y: -4, boxShadow: '0 20px 40px -10px rgba(49, 130, 246, 0.5)' }}
-            whileTap={{ scale: 0.97 }}
+            type="submit"
+            disabled={isSubmitting || submitStatus === 'success'}
+            whileHover={!isSubmitting && submitStatus !== 'success' ? { y: -4, boxShadow: '0 20px 40px -10px rgba(49, 130, 246, 0.5)' } : {}}
+            whileTap={!isSubmitting && submitStatus !== 'success' ? { scale: 0.97 } : {}}
             style={{
               width: '100%',
               padding: '1.3rem',
-              background: 'linear-gradient(135deg, #3182f6 0%, #2563eb 100%)',
+              background: submitStatus === 'success' 
+                ? '#10b981' // Green
+                : submitStatus === 'error'
+                ? '#ef4444' // Red
+                : 'linear-gradient(135deg, #3182f6 0%, #2563eb 100%)',
               border: 'none',
               borderRadius: '14px',
               color: '#ffffff',
               fontSize: '1.05rem',
               fontWeight: 800,
-              cursor: 'pointer',
+              cursor: isSubmitting || submitStatus === 'success' ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting ? 0.7 : 1,
               marginTop: '1rem',
               letterSpacing: '0.05em',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.6rem',
-              transition: 'background-color 0.2s'
+              transition: 'all 0.3s ease'
             }}
           >
-            SEND MESSAGE <Send size={20} strokeWidth={2.5} />
+            {isSubmitting ? (
+              '전송 중...'
+            ) : submitStatus === 'success' ? (
+              <>전송 완료! <CheckCircle size={20} strokeWidth={2.5} /></>
+            ) : submitStatus === 'error' ? (
+              <>전송 실패 <XCircle size={20} strokeWidth={2.5} /></>
+            ) : (
+              <>SEND MESSAGE <Send size={20} strokeWidth={2.5} /></>
+            )}
           </motion.button>
-        </motion.div>
+        </motion.form>
         
       </div>
 
