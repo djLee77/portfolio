@@ -78,7 +78,7 @@ export function BuildSection() {
     <section style={{ background: 'var(--bg-color)', position: 'relative' }}>
       <div style={{ padding: '7rem 6vw 5rem' }}>
         <p style={{ fontSize: '0.95rem', letterSpacing: '0.3em', color: 'var(--accent)', textTransform: 'uppercase', fontWeight: 800, marginBottom: '1.2rem' }}>
-          02 — Build
+          03 — Build
         </p>
         <h2 style={{ fontSize: 'clamp(4.5rem, 8vw, 7.5rem)', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.045em', lineHeight: 1.05 }}>
           Things I've<br />Built.

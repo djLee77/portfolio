@@ -132,7 +132,7 @@ export function ConnectSection() {
           viewport={{ once: false }}
           style={{ fontSize: '0.95rem', letterSpacing: '0.3em', color: subColor, textTransform: 'uppercase', fontWeight: 800, marginBottom: '1.5rem' }}
         >
-          03 — Connect
+          04 — Connect
         </motion.p>
 
         <motion.h2
